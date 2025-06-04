@@ -13,7 +13,7 @@ import config.DBConfig;
 
 public class ApplicantController {
 
-	public ApplicantModel getApplicantById(String id) {
+	public ApplicantModel getApplicantById(int id) {
 	    ApplicantModel applicant = null;
 
 	    try {
@@ -23,9 +23,9 @@ public class ApplicantController {
 	        String sql = "SELECT * FROM userapplicant WHERE id = ?";
 	        PreparedStatement ps = con.prepareStatement(sql);
 	        System.out.println("testing");
-	        ps.setString(1, id);
+	        ps.setInt(1, id);
 	        ResultSet rs = ps.executeQuery();
-	        System.out.println("testing1"+rs);
+//	        System.out.println("testing1"+rs);
 	        if (rs.next()) {
 	            applicant = new ApplicantModel();
 	            applicant.setId(rs.getInt("id"));  
@@ -35,19 +35,29 @@ public class ApplicantController {
 	            applicant.setFname(rs.getString("fname"));
 	            System.out.println("testing3"+applicant.getFname());
 	            String dobString = rs.getString("dob");
-	            SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	            System.out.println("testing6"+dateFormat);
 	            try {
 	                java.util.Date utilDate = dateFormat.parse(dobString);
 	                System.out.println("testing7"+utilDate);
-	                java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-	                System.out.println("testing8"+sqlDate);
-	                applicant.setDob(sqlDate.toString());
+	                //java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+	               // System.out.println("testing8"+sqlDate);
+	                applicant.setDob(utilDate.toString());
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            }
+//	            String dobFromDB = rs.getString("dob"); // "2000-12-31"
+//	            
+//	            try {
+//	                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//	                Date date = sdf.parse(dobString); // Convert String to Date
+//	                dateChooser.setDate(date); // Set to JDateChooser
+//	            } catch (ParseException e) {
+//	                e.printStackTrace();
+//	            }
 	            System.out.println("testing4"+applicant.getDob());
 	            applicant.setGender(rs.getString("gender"));
+	            System.out.println("testing4"+applicant.getGender());
 	            applicant.setMstatus(rs.getString("mstatus"));
 	            applicant.setAddress(rs.getString("address"));
 	            applicant.setPhone(rs.getInt("phone"));
@@ -74,7 +84,6 @@ public class ApplicantController {
 	
 	public boolean updateApplicant(ApplicantModel model) {
 	    boolean result = false;
-
 	    try {
 	        DBConfig db = new DBConfig();
 	        Connection con = db.getConnection();

@@ -58,8 +58,6 @@ public class AdminForm extends JFrame {
 
         JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftPanel.setOpaque(false);
-
-        // Add left space
         leftPanel.add(Box.createHorizontalStrut(180)); 
 
         ImageIcon logoIcon = new ImageIcon("src/images/logo.png");
@@ -267,7 +265,8 @@ public class AdminForm extends JFrame {
     }
 
     public void navigateToAcceptRejectPage(int applicantId) {
-    	new acceptRejectForm(applicantId);
+    	acceptRejectForm acceptForm = new acceptRejectForm(applicantId);
+    	acceptForm.setVisible(true);
     }
 
     private static class ButtonRenderer extends JButton implements TableCellRenderer {

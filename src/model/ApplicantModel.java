@@ -61,7 +61,7 @@ public class ApplicantModel {
     public void setMail(String mail) { this.mail = mail; }
 
     public int getPhone() { return phone; }
-    public void setPhone(String phone2) { this.phone = phone2; }
+    public void setPhone(int phone2) { this.phone = phone2; }
 
     public String getEducation() { return education; }
     public void setEducation(String education) { this.education = education; }
